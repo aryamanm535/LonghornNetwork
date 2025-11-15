@@ -3,6 +3,10 @@ import java.util.concurrent.*;
 
 // Main.java - Self-contained testing & grading with multiple built‑in test cases.
 public class Main {
+    /**
+     * Runs all built-in test cases for the Longhorn Network. The method
+     * @param args 
+     */
     public static void main(String[] args) {
         // Create a list of test cases.
         List<List<UniversityStudent>> testCases = new ArrayList<>();
