@@ -205,7 +205,15 @@ public class Main {
             // For test case 2, we expect a non-empty referral path when searching for "DummyCompany".
             // For test cases that don't have that internship, the returned path may be empty.
             List<UniversityStudent> path = pathFinder.findReferralPath(students.get(0), "DummyCompany");
-            System.out.println("ReferralPathFinder returned path: " + path);
+            if (path.isEmpty()) {
+                System.out.println("No referral path found\n");
+            } else {
+                for (int i = 0; i < path.size(); i++) {
+                    System.out.print(path.get(i).name);
+                    if (i < path.size() - 1) System.out.print(" -> ");
+                }
+                System.out.print("\n\n");
+            }
             if (testCaseNumber == 2 && path.isEmpty()) {
                 throw new Exception("Expected a referral path, but none was found.");
             }

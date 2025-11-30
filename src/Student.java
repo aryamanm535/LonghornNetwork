@@ -17,9 +17,8 @@ public abstract class Student {
     protected List<String> previousInternships;
 
     /**
-     * Computes a numeric {@code connection strength} between this student and
-     * another student in the network. Implementations may choose to take into
-     * account different parameters
+     * Computes a numeric connection strength between this student and
+     * another student in the network. Implementations can choose different parameter
      *
      * @param other another student to compare against.
      * @return a non-negative integer where larger values indicate a stronger

@@ -1,33 +1,79 @@
 import java.util.*;
 
-
-/**
- * Uses a graph of students to compute internship referral paths between
- * students in the Longhorn Network.
- */
 public class ReferralPathFinder {
-    /**
-     * Creates a new {@code ReferralPathFinder} that operates on the provided
-     * {@link StudentGraph}.
-     *
-     * @param graph the graph representing students and their connections
-     */
-    public ReferralPathFinder(StudentGraph graph) {
-        // Constructor
+
+    private StudentGraph graph;
+
+    public ReferralPathFinder(StudentGraph g) {
+        this.graph = g;
     }
 
-     /**
-     * Finds a referral path from a starting student to any student who has
-     * previously interned at the target company.
-     * Will use Dijkstra's algorithm over the underlying {@code StudentGraph}.
+    /**
+     * Runs a Dijkstra search to locate the closest student (in terms of
+     * strongest connection path) who has interned at the target company.
      *
-     * @param start he student from whom the search should begin
-     * @param targetCompany name of the company that the caller is interested in
-     * @return an ordered list of students representing a referral chain from
-     *         {@code start} to a student who can refer them to {@code targetCompany}.
+     * A stronger edge weight = better connection, so we treat the “distance”
+     * as the reciprocal of the weight.
      */
     public List<UniversityStudent> findReferralPath(UniversityStudent start, String targetCompany) {
-        // Method signature only
+
+        // distance and prev tracking
+        Map<UniversityStudent, Double> dist = new HashMap<>();
+        Map<UniversityStudent, UniversityStudent> prev = new HashMap<>();
+
+        // keep track of visited nodes
+        Set<UniversityStudent> visited = new HashSet<>();
+
+        // initialize everything as infinitely far
+        for (UniversityStudent s : graph.getAllNodes()) {
+            dist.put(s, Double.MAX_VALUE);
+            prev.put(s, null);
+        }
+        dist.put(start, 0.0);
+
+        PriorityQueue<UniversityStudent> pq = new PriorityQueue<>(Comparator.comparingDouble(dist::get));
+        pq.add(start);
+
+        while (!pq.isEmpty()) {
+            UniversityStudent u = pq.poll();
+            if (visited.contains(u)) continue;
+            visited.add(u);
+
+            // Check internship match
+            for (String comp : u.previousInternships) {
+                if (comp.equalsIgnoreCase(targetCompany)) {
+
+                    List<UniversityStudent> path = new ArrayList<>();
+                    UniversityStudent cur = u;
+
+                    while (cur != null) {
+                        path.add(cur);
+                        cur = prev.get(cur);
+                    }
+
+                    Collections.reverse(path);
+                    return path;
+                }
+            }
+
+            // relax edges
+            for (StudentGraph.Edge e : graph.getNeighbors(u)) {
+                UniversityStudent v = e.neighbor;
+                if (visited.contains(v)) {
+                    continue;
+                }
+
+                double newDist = dist.get(u) + (1.0 / e.weight);
+
+                if (newDist < dist.get(v)) {
+                    dist.put(v, newDist);
+                    prev.put(v, u);
+                    pq.add(v);
+                }
+            }
+        }
+
+        // no valid referral path found
         return new ArrayList<>();
     }
 }
