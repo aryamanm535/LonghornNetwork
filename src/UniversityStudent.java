@@ -1,9 +1,10 @@
+
 import java.util.*;
 
 /**
- * Student that represents a university student participating
- * in the Longhorn Network. A UniversityStudent can be matched with
- * roommates, placed into pods, and used in referral-path searches.
+ * Student that represents a university student participating in the Longhorn
+ * Network. A UniversityStudent can be matched with roommates, placed into pods,
+ * and used in referral-path searches.
  */
 public class UniversityStudent extends Student {
 
@@ -16,14 +17,14 @@ public class UniversityStudent extends Student {
     /**
      * Constructor
      *
-     * @param name              
-     * @param age                 
-     * @param gender         
-     * @param year      
-     * @param major       
-     * @param gpa            
+     * @param name
+     * @param age
+     * @param gender
+     * @param year
+     * @param major
+     * @param gpa
      * @param roommatePreferences
-     * @param previousInternships 
+     * @param previousInternships
      */
     public UniversityStudent(String name, int age, String gender, int year, String major, double gpa, List<String> roommatePreferences, List<String> previousInternships) {
         this.name = name;
@@ -34,6 +35,10 @@ public class UniversityStudent extends Student {
         this.gpa = gpa;
         this.roommatePreferences = roommatePreferences;
         this.previousInternships = previousInternships;
+    }
+
+    public String getName() {
+        return name;
     }
 
     /**
@@ -114,7 +119,8 @@ public class UniversityStudent extends Student {
     }
 
     /**
-     * Computes the connection strength between this student and another student.
+     * Computes the connection strength between this student and another
+     * student.
      *
      * @param other another student to compare against
      * @return a non-negative integer
@@ -167,15 +173,43 @@ public class UniversityStudent extends Student {
 
     @Override
     public String toString() {
-        return "UniversityStudent{" +
-                "name='" + name + '\'' +
-                ", age=" + age +
-                ", gender='" + gender + '\'' +
-                ", year=" + year +
-                ", major='" + major + '\'' +
-                ", gpa=" + gpa +
-                ", roommate=" + (roommate == null ? "none" : roommate.name) +
-                '}';
+        return "UniversityStudent{"
+                + "name='" + name + '\''
+                + ", age=" + age
+                + ", gender='" + gender + '\''
+                + ", year=" + year
+                + ", major='" + major + '\''
+                + ", gpa=" + gpa
+                + ", roommate=" + (roommate == null ? "none" : roommate.name)
+                + '}';
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
+    public double getGpa() {
+        return gpa;
+    }
+
+    public List<String> getPreviousInternships() {
+        return previousInternships;
+    }
+
+    public List<String> getRoommatePreferences() {
+        return roommatePreferences;
     }
 
 }

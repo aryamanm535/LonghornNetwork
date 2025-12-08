@@ -37,7 +37,9 @@ public class ChatThread implements Runnable {
             //I assumed that chatting creates a friendship
             sender.addFriend(receiver);
             receiver.addFriend(sender);
-            sender.addChatMessage(receiver, message);
+            String tagged = "[" + sender.getName() + "] " + message;
+            sender.addChatMessage(receiver, tagged);
+            receiver.addChatMessage(sender, tagged);
             System.out.println("[ChatThread] " + sender.name + " sent message to " + receiver.name + ": \"" + message + "\"");
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
